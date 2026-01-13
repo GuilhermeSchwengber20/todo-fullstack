@@ -10,5 +10,17 @@ export const authenticate = () => (req: Request, res: Response, next: NextFuncti
 
     if (!authHeader) res.status(401).json({message: "Não autorizado"});
 
-    
+    const token = authHeader && authHeader.split(" ")[1];
+
+    try {
+
+        const decoded = jwt.verify(token as string, JWT_SECRET);
+        if(decoded) {
+            (req as any).user = decoded;
+
+            next();
+        }
+    } catch (error) {
+        return res.status(403).json({message: "Token inválido"});
+    }
 } 
