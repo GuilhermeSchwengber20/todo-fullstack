@@ -13,7 +13,6 @@ export const authenticate = () => (req: Request, res: Response, next: NextFuncti
     const token = authHeader && authHeader.split(" ")[1];
 
     try {
-
         const decoded = jwt.verify(token as string, JWT_SECRET);
         if(decoded) {
             (req as any).user = decoded;

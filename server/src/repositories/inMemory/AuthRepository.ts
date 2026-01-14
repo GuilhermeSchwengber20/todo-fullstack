@@ -32,6 +32,11 @@ class AuthRepository implements IAuthRepository{
         return user;
     }
 
+    async getById(id: string): Promise<User | null> {
+        const user = await this._users.find(u => u.id === id) || null;
+        return user;
+    }
+
 }
 
 export default AuthRepository;

@@ -3,18 +3,17 @@ import AuthController from "../controllers/AuthController";
 import AuthService from "../services/AuthService";
 import AuthRepository from "../repositories/inMemory/AuthRepository";
 import { validateBody } from "../middlewares/validate";
-import { RegisterAuthSchema } from "../schemas/AuthSchema";
+import { LoginAuthSchema, RegisterAuthSchema } from "../schemas/AuthSchema";
 
-// PORQUE ESSE ARQUIVO COMEÇA COM LETRA MINUSCULA (PESQUISAR)
 const authRoutes = Router();
 
 const authRepository = new AuthRepository();
 const authService = new AuthService(authRepository);
 const authController = new AuthController(authService);
 
-
 authRoutes.post("/auth/register", validateBody(RegisterAuthSchema), authController.register);
-// authRoutes.post("/auth/login");
-// authRoutes.post("/auth/logout");
+authRoutes.post("/auth/login", validateBody(LoginAuthSchema), authController.login);
+authRoutes.post("/auth/refresh", authController.refresh);
+authRoutes.post("/auth/logout", authController.logout);
 
 export default authRoutes;
