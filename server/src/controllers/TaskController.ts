@@ -1,9 +1,9 @@
-import TodoService from "../services/TodoService";
+import TaskService from "../services/TaskService";
 import { Request, Response } from "express";
 
-class TodoController {
+class TaskController {
 
-    constructor(private readonly todoServie: TodoService) {}
+    constructor(private readonly taskService: TaskService) {}
 
 
     add = async (req: Request, res: Response) => {
@@ -11,7 +11,7 @@ class TodoController {
         const userId = (req as any).user.id;
         
         try {
-            const data = await this.todoServie.add({ title, description, userId });
+            const data = await this.taskService.add({ title, description, userId });
 
             res.status(201).json(data);
         } catch (error) {
@@ -23,4 +23,4 @@ class TodoController {
 }
 
 
-export default TodoController
+export default TaskController

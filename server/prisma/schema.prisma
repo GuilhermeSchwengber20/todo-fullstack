@@ -18,13 +18,13 @@ model User {
   email     String   @unique
   password  String
   name      String
-  todos     Todo[]
+  todos     Task[]
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Todo {
+model Task {
   id          String  @id @default(uuid())
   title       String
   description String?
