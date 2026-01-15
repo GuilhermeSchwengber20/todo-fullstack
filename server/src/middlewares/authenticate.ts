@@ -1,8 +1,9 @@
 
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
-const JWT_SECRET = "8996c4e5-308b-4284-a119-671707fe4e0c";
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export const authenticate = () => (req: Request, res: Response, next: NextFunction) => {
 
@@ -19,7 +20,8 @@ export const authenticate = () => (req: Request, res: Response, next: NextFuncti
 
             next();
         }
-    } catch (error) {
-        return res.status(403).json({message: "Token inválido"});
+    } catch (error: any) {
+        console.log(error.message)
+        return res.status(403).json({message: error.message});
     }
 } 

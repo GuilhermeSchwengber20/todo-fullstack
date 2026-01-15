@@ -10,8 +10,9 @@ class TaskRepository implements ITaskRepository {
     }
 
     async add(todo: Task): Promise<Task> {
-        this._todos.push(todo);
-        return todo;
+        this._todos.push(todo)
+        console.log(this._todos)
+        return todo
     }
 }
 
