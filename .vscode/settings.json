@@ -1,3 +1,6 @@
 {
-    "editor.fontFamily": "Fira Code"
+    "editor.fontFamily": "Fira Code",
+    "prisma.pinToPrisma6": false,
+    "prisma.enableLanguageServer": true,
+    "editor.formatOnSave": true
 }

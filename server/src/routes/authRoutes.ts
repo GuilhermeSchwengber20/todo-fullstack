@@ -1,7 +1,8 @@
 import { Router } from "express";
 import AuthController from "../controllers/AuthController";
 import AuthService from "../services/AuthService";
-import AuthRepository from "../repositories/inMemory/AuthRepository";
+import AuthRepository from "../repositories/prisma/AuthRepository";
+// import AuthRepository from "../repositories/inMemory/AuthRepository";
 import { validateBody } from "../middlewares/validate";
 import { LoginAuthSchema, RegisterAuthSchema } from "../schemas/AuthSchema";
 

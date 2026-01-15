@@ -11,7 +11,6 @@ class AuthService {
 
     async register(user: User): Promise<{user: Partial<User>, tokens: AuthTokens}> {
         
-        
         const userExists = await this.authRepository.getByEmail(user.email);
 
         if (userExists) {
@@ -21,7 +20,7 @@ class AuthService {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         
         user.password = hashedPassword;
-        user.id = v4(); // geração de id por uuid
+        user.id = v4();
 
         const registeredUser = await this.authRepository.register(user);
 
@@ -29,7 +28,6 @@ class AuthService {
 
         return {
             user: {
-                id: registeredUser.id,
                 email: registeredUser.email,
                 name: registeredUser.name,
             },
@@ -53,7 +51,6 @@ class AuthService {
         
         return {
             user: {
-                id: existingUser.id,
                 email: existingUser.email,
                 name: existingUser.name,
             },
