@@ -1,3 +1,4 @@
+import { TaskIdParam } from "../models/TaskIdParam";
 import TaskService from "../services/TaskService";
 import { Request, Response } from "express";
 
@@ -19,12 +20,12 @@ class TaskController {
         }
     }
 
-    complete = async (req: Request, res: Response) => {
+    complete = async (req: Request<TaskIdParam>, res: Response) => {
         const { id_task } = req.params;
         const userId = (req as any).user.id;
 
         try {
-            const data = await this.taskService.complete({ id_task: Array.isArray(id_task) ? id_task[0] : id_task, userId });
+            const data = await this.taskService.complete({ id_task, userId });
 
             res.status(200).json(data);
         } catch (error: any) {
@@ -33,13 +34,12 @@ class TaskController {
         }
     }
 
-    delete = async (req: Request, res: Response) => {
+    delete = async (req: Request<TaskIdParam>, res: Response) => {
         const { id_task } = req.params;
-        console.log(req.params)
         const userId = (req as any).user.id;
 
         try {
-            const data = await this.taskService.delete({ id_task: Array.isArray(id_task) ? id_task[0] : id_task, userId });
+            const data = await this.taskService.delete({ id_task, userId });
 
             res.status(200).json(data);
         } catch (error: any) {
@@ -48,13 +48,13 @@ class TaskController {
         }
     }
 
-    update = async (req: Request, res: Response) => {
+    update = async (req: Request<TaskIdParam>, res: Response) => {
         const { id_task } = req.params;
         const userId = (req as any).user.id;
         const { title, description } = req.body;
 
         try {
-            const data = await this.taskService.update({userId, id_task: Array.isArray(id_task) ? id_task[0] : id_task, title, description });
+            const data = await this.taskService.update({userId, id_task, title, description });
             res.status(200).json(data);
         } catch (error: any) {
             console.error(error);

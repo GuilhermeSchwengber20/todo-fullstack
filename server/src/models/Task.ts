@@ -2,10 +2,10 @@ export type Task = {
     id: string;
     userId: string;
     title: string;
-    description?: string;
+    description?: string | null;
     completed: boolean;
     deletedAt: Date | null;
    
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | null;
+    updatedAt?: Date | null;
 }

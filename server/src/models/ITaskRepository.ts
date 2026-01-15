@@ -8,7 +8,7 @@ export default interface ITaskRepository {
 
     delete(task: Task): Promise<Task>;
 
-    findByUserAndId(userId: string, id_task: string): Task | null;
+    findByUserAndId(userId: string, id_task: string): Promise<Task | null>;
 
     update(task: Task): Promise<Task>;
 

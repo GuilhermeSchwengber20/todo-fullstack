@@ -35,7 +35,7 @@ class TaskRepository implements ITaskRepository {
         return this._todos[taskIndex];
     }
 
-    findByUserAndId(userId: string, id_task: string): Task | null {
+    async findByUserAndId(userId: string, id_task: string): Promise<Task | null>{
         const task = this._todos.find(task => task.userId === userId && task.id === id_task);
         return task || null;
     }

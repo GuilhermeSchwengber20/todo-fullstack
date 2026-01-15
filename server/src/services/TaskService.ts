@@ -1,11 +1,11 @@
 import { v4 } from "uuid";
 import { Task } from "../models/Task";
 
-import TaskRepository from "../repositories/inMemory/TaskRepository";
+import ITaskRepository from "../models/ITaskRepository";
 
 class TaskService {
 
-    constructor(private readonly taskRepository: TaskRepository) {}
+    constructor(private readonly taskRepository: ITaskRepository) {}
 
     async add (todo: { title: string, description: string, userId: string }): Promise<Task> {
         const registeredTodo: Task = await this.taskRepository.add({
@@ -18,7 +18,7 @@ class TaskService {
     }
 
     async complete (data: { id_task: string, userId: string }): Promise<Task> {
-        const task = this.taskRepository.findByUserAndId(data.userId, data.id_task);
+        const task = await this.taskRepository.findByUserAndId(data.userId, data.id_task);
         if(!task) {
             throw new Error("Tarefa não encontrada");
         }
@@ -32,7 +32,7 @@ class TaskService {
     }
 
     async delete (data: { id_task: string, userId: string }): Promise<Task> {
-        const task = this.taskRepository.findByUserAndId(data.userId, data.id_task);
+        const task = await this.taskRepository.findByUserAndId(data.userId, data.id_task);
         if(!task) {
             throw new Error("Tarefa não encontrada");
         }
@@ -47,8 +47,7 @@ class TaskService {
     }
 
     async update (data: { id_task: string, userId: string, title: string, description?: string }): Promise<Task> {
-        console.log(data);
-        const task = this.taskRepository.findByUserAndId(data.userId, data.id_task);
+        const task = await this.taskRepository.findByUserAndId(data.userId, data.id_task);
         if(!task) {
             throw new Error("Tarefa não encontrada");
         }
@@ -63,7 +62,7 @@ class TaskService {
     }
 
     async listAll(userId: string): Promise<Task[]> {
-        const tasks = this.taskRepository.listAllByUserAndNotDeleted(userId)
+        const tasks = await this.taskRepository.listAllByUserAndNotDeleted(userId)
 
         return tasks
     }
