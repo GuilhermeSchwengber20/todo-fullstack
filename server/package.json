@@ -10,7 +10,6 @@
     "dev": "tsx watch src/index.ts",
     "deploy:prisma": "npx prisma migrate deploy"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
