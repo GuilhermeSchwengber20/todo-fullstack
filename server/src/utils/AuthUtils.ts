@@ -25,12 +25,7 @@ export const verifyRefreshToken = (token: string) => {
 }
 
 export const verifyAccessToken = (token: string) => {
-    try  {
-        const decoed = jwt.verify(token, JWT_SECRET);
-        return decoed;
-    } catch (error) {
-        console.error("Erro ao verificar o access token:", error);
-        
-    }
+    const decoed = jwt.verify(token, JWT_SECRET);
+    return decoed;
 }
     

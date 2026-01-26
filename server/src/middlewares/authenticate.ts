@@ -11,7 +11,6 @@ const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 const authService = new AuthService(new AuthRepository());
 
 export const authenticate = () => async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.cookies.accessToken);
     const accessToken = req.cookies.accessToken;
 
     if(!accessToken) {
@@ -58,7 +57,7 @@ export const authenticate = () => async (req: Request, res: Response, next: Next
                 }
             } catch (error) {
                 console.log(error);
-                return res.status(401).json({message: "Sessão expirada. Faça login novamente 2."});
+                return res.status(401).json({message: "Sessão expirada. Faça login novamente."});
             }
         }
         return res.status(403).json({message: "Token inválido"});

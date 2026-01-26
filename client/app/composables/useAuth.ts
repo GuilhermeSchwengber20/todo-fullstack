@@ -1,6 +1,6 @@
 
 export const useAuth = () => {
-    const user = useState<null | { email: string; name: string }>("authUser", () => null);
+    const user = useState<null | { email: string; name: string, id: string }>("authUser", () => null);
 
     return { user }
 }
