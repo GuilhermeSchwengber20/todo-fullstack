@@ -71,7 +71,6 @@ class AuthService {
             throw new Error("Usuário não encontrado.");
         }
 
-
         const { accessToken, refreshToken}  = generateTokens(user);
 
         return {

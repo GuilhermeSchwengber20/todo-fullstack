@@ -12,6 +12,12 @@ class AuthController {
         try {
             const { tokens, user } = await this.authService.register(req.body as User);
 
+            res.cookie("accessToken", tokens.accessToken, {
+                httpOnly: true,
+                secure: true,
+                maxAge: SEVEN_DAYS,
+                sameSite: "strict",
+            })
             res.cookie("refreshToken", tokens.refreshToken, {
                 httpOnly: true,
                 secure: true,
@@ -20,7 +26,7 @@ class AuthController {
             })
 
 
-            return  res.status(201).json({ accessToken: tokens.accessToken, user });
+            return  res.status(201).json({ user });
         } catch (error: any) {
             return res.status(400).json({ message: error.message });
         }
@@ -30,6 +36,12 @@ class AuthController {
         try {
             const { tokens, user } = await this.authService.login(req.body as User);
 
+             res.cookie("accessToken", tokens.accessToken, {
+                httpOnly: true,
+                secure: true,
+                maxAge: SEVEN_DAYS,
+                sameSite: "strict",
+            })
             res.cookie("refreshToken", tokens.refreshToken, {
                 httpOnly: true,
                 secure: true,
@@ -37,7 +49,8 @@ class AuthController {
                 sameSite: "strict",
             })
 
-            return  res.status(200).json({ accessToken: tokens.accessToken, user });
+
+            return  res.status(201).json({ user });
         } catch (error: any) {
             return res.status(400).json({ message: error.message });
             
@@ -45,6 +58,11 @@ class AuthController {
     }
 
     logout = async (req: Request, res: Response) => {
+        res.clearCookie("accessToken", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+        })
         res.clearCookie("refreshToken", {
             httpOnly: true,
             secure: true,
