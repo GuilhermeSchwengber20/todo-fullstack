@@ -12,10 +12,10 @@ const taskController = new TaskController(taskService)
 
 const taskRoutes = Router()
 
-taskRoutes.post('/task', validateBody(CreateTaskSchema), authenticate(), taskController.add)
-taskRoutes.patch('/task/:id_task/complete', authenticate(), taskController.complete)
-taskRoutes.delete('/task/:id_task/delete', authenticate(), taskController.delete)
-taskRoutes.put('/task/:id_task', validateBody(UpdateTaskShema), authenticate(), taskController.update)
+taskRoutes.post('/tasks', validateBody(CreateTaskSchema), authenticate(), taskController.add)
+taskRoutes.patch('/tasks/:id_task/complete', authenticate(), taskController.complete)
+taskRoutes.delete('/tasks/:id_task/delete', authenticate(), taskController.delete)
+taskRoutes.put('/tasks/:id_task', validateBody(UpdateTaskShema), authenticate(), taskController.update)
 
 taskRoutes.get('/tasks', authenticate(), taskController.listAll)
 
