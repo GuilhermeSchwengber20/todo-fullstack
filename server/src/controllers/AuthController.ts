@@ -16,13 +16,13 @@ class AuthController {
                httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             })
             res.cookie("refreshToken", tokens.refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             })
 
 
@@ -40,13 +40,13 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             })
             res.cookie("refreshToken", tokens.refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             })
 
 
@@ -62,13 +62,13 @@ class AuthController {
            httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             maxAge: SEVEN_DAYS,
-            sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         })
         res.clearCookie("refreshToken", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             maxAge: SEVEN_DAYS,
-            sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         });
         return res.status(200).json({ message: "Logout realizado com sucesso." });
     }
@@ -83,7 +83,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             })
 
             return res.status(200).json({ accessToken });

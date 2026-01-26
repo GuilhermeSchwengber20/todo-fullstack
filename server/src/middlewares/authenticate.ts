@@ -41,13 +41,13 @@ export const authenticate = () => async (req: Request, res: Response, next: Next
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
                     maxAge: SEVEN_DAYS,
-                    sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
                 })
                 res.cookie("refreshToken", newRefreshToken, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
                     maxAge: SEVEN_DAYS,
-                    sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+                    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
                 })
 
                 const decodedNew = verifyAccessToken(newAccessToken);
