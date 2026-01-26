@@ -78,6 +78,20 @@ class AuthService {
             refreshToken
         }
     }
+
+
+    async me(userId: string): Promise<Partial<User>> {
+        const user = await this.authRepository.getById(userId);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+
+        return {
+            email: user.email,
+            name: user.name,
+            id: user.id
+        }
+    }
         
 
 }

@@ -13,16 +13,16 @@ class AuthController {
             const { tokens, user } = await this.authService.register(req.body as User);
 
             res.cookie("accessToken", tokens.accessToken, {
-                httpOnly: true,
-                secure: true,
+               httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: "strict",
+                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
             })
             res.cookie("refreshToken", tokens.refreshToken, {
                 httpOnly: true,
-                secure: true,
+                secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: "strict",
+                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
             })
 
 
@@ -38,15 +38,15 @@ class AuthController {
 
              res.cookie("accessToken", tokens.accessToken, {
                 httpOnly: true,
-                secure: true,
+                secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: "strict",
+                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
             })
             res.cookie("refreshToken", tokens.refreshToken, {
                 httpOnly: true,
-                secure: true,
+                secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: "strict",
+                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
             })
 
 
@@ -59,14 +59,16 @@ class AuthController {
 
     logout = async (req: Request, res: Response) => {
         res.clearCookie("accessToken", {
-            httpOnly: true,
-            secure: true,
-            sameSite: "strict",
+           httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: SEVEN_DAYS,
+            sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
         })
         res.clearCookie("refreshToken", {
             httpOnly: true,
-            secure: true,
-            sameSite: "strict",
+            secure: process.env.NODE_ENV === "production",
+            maxAge: SEVEN_DAYS,
+            sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
         });
         return res.status(200).json({ message: "Logout realizado com sucesso." });
     }
@@ -79,15 +81,27 @@ class AuthController {
             
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
-                secure: true,
+                secure: process.env.NODE_ENV === "production",
                 maxAge: SEVEN_DAYS,
-                sameSite: "strict",
+                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
             })
 
             return res.status(200).json({ accessToken });
         } catch (error) {
             console.error(error);
             res.status(400).json({ message: "Não foi possível atualizar o token." });
+        }
+    }
+
+    me = async (req: Request, res: Response) => {
+        try {
+            const userId = (req as any).user.id;
+
+            const user = await this.authService.me(userId);
+            return res.status(200).json({ user });
+        } catch (error) {
+            console.error(error);
+            res.status(400).json({ message: "Não foi possível obter o usuário." });
         }
     }
 }

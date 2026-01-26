@@ -5,6 +5,7 @@ import AuthRepository from "../repositories/prisma/AuthRepository";
 // import AuthRepository from "../repositories/inMemory/AuthRepository";
 import { validateBody } from "../middlewares/validate";
 import { LoginAuthSchema, RegisterAuthSchema } from "../schemas/AuthSchema";
+import { authenticate } from "../middlewares/authenticate";
 
 const authRoutes = Router();
 
@@ -16,5 +17,6 @@ authRoutes.post("/auth/register", validateBody(RegisterAuthSchema), authControll
 authRoutes.post("/auth/login", validateBody(LoginAuthSchema), authController.login);
 authRoutes.post("/auth/refresh", authController.refresh);
 authRoutes.post("/auth/logout", authController.logout);
+authRoutes.get("/auth/me", authenticate(), authController.me);
 
 export default authRoutes;

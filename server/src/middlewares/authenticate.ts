@@ -1,15 +1,14 @@
 
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { verifyAccessToken } from "../utils/AuthUtils";
 import "dotenv/config";
 
 import AuthService from "../services/AuthService";
 import AuthRepository from "../repositories/prisma/AuthRepository";
+
 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 
 const authService = new AuthService(new AuthRepository());
-
-const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export const authenticate = () => async (req: Request, res: Response, next: NextFunction) => {
     console.log(req.cookies.accessToken);
@@ -20,11 +19,11 @@ export const authenticate = () => async (req: Request, res: Response, next: Next
     }
 
     try {
-        const decoded = jwt.verify(accessToken as string, JWT_SECRET);
+        const decoded = verifyAccessToken(accessToken);
         if(decoded) {
             (req as any).user = decoded;
 
-            next();
+            return next();
         }
     } catch (error: any) {
         console.log(error.name)
@@ -43,19 +42,19 @@ export const authenticate = () => async (req: Request, res: Response, next: Next
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
                     maxAge: SEVEN_DAYS,
-                    sameSite: "strict",
+                    sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
                 })
                 res.cookie("refreshToken", newRefreshToken, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
                     maxAge: SEVEN_DAYS,
-                    sameSite: "strict",
+                    sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
                 })
 
-                const decodedNew = jwt.verify(newAccessToken as string, JWT_SECRET);
+                const decodedNew = verifyAccessToken(newAccessToken);
                 if(decodedNew) {
                     (req as any).user = decodedNew;
-                    next();
+                    return next();
                 }
             } catch (error) {
                 console.log(error);
