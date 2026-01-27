@@ -7,7 +7,7 @@ import taskRoutes from "./routes/taskRoutes";
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:3000", "https://todo-fullstack-1dfu.vercel.app"]
+const allowedOrigins = ["http://localhost:3000", "https://todo-fullstack-1dfu.vercel.app", "todo-fullstack-eta-puce.vercel.app"]
 
 app.use(cors({
   origin: (origin, callback) => {
